@@ -1,26 +1,36 @@
 指定した@～～～がfavしたツイを見て、そこに画像があればひっぱります
 
 1.twitterkey.jsonにツイAPI利用の必要事項いれます
+
 さんこう　http://phiary.me/twitter-api-key-get-how-to/
 2.gtng.pyの13行目くらいからの設定
 
 save_path = os.path.abspath("./savedir/")
 
 #save_pathの下にアニメじゃないファイル移動先掘ってね
+
 animejanaipath = "animejanai"
 
 twitterkey_jsonfilepath = "./twitterkey.json"
+
 image_number = 0
+
 #多く指定すると画像も多くなるけどあんまり多いとツイAPIが一時的に利用不能になるかもしれないやつ
+
 get_pages = 3
+
 count = 60
 
 3.2のもうちょい下に
+
         "screen_name": "",
+
         があるので、ここを適当なツイID（＠ぬき）をいれます
 
 4.カレントをgtng.pyのとこにうつして python gtng.py
+
   3で指定したツイIDのfavツイの画像を引っ張ってきます。
+
   なので絵描きさんとかを狙い撃ちすると効率がいいです
 
 
@@ -28,7 +38,9 @@ count = 60
 
 
 todo ツイID指定をコマンドラインかtxtファイルかどっちかからの指定にします。収集の数とかも
+
 todo 1ファイルゲットのあいまにスリープいれよう
+
 todo 
 
 
