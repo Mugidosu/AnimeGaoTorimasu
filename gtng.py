@@ -84,19 +84,29 @@ def is_animefile(filename, cascade_file = "./lbpcascade_animeface.xml"):
     faces = cascade.detectMultiScale(gray,
                                      # detector options
                                      scaleFactor = 1.1,
-                                     minNeighbors = 5,
-                                     minSize = (24, 24))
+                                     minNeighbors = 3,
+                                     minSize = (20, 20))
+    for (x, y, w, h) in faces:
+        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+    dirname = os.path.dirname(filename)
+    if dirname.endswith("\\") is False:
+        dirname += "\\"
+    name, ext = os.path.splitext(os.path.basename(filename))
+    renamedfilename = dirname + name + "_detect" + ext
+    cv2.imwrite(renamedfilename, image)
     return (len(faces) > 0)
 
 #捨てると必要なものをステそうなのでリネームで対応したい（希望
-#pre + filename + suf＝変更後のファイル名です
+#pre + filename(extぬき) + suf + ext＝変更後のファイル名です
 def rename_file(filename, pre, suf = ""):
     try:
         #何回も同じことやってまううう（todo
         dirname = os.path.dirname(filename)
         if dirname.endswith("\\") is False:
             dirname += "\\"
-        renamedfilename = dirname + animejanaipath + "\\" + pre + os.path.basename(filename) + suf
+        name, ext = os.path.splitext(os.path.basename(filename))
+        renamedfilename = dirname + animejanaipath + "\\" + pre + name + suf + ext
         os.rename(filename, renamedfilename)
     except OSError as oserr:
         print("OSError:ファイル名変更に失敗しました:{0}", oserr)
