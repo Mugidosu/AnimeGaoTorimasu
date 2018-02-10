@@ -38,7 +38,8 @@ def fav_tweets_get(page, jsonfilepath):
     url = "https://api.twitter.com/1.1/favorites/list.json?"
     params = {
         #任意のtwitterID,@以下の文字列
-        "screen_name": "rin7914",
+#        "screen_name": "rin7914",
+        "screen_name": "dero_ri",
         "page": page,
         "count": count,
         "include_entities": 1
@@ -85,17 +86,19 @@ def is_animefile(filename, cascade_file = "./lbpcascade_animeface.xml"):
                                      # detector options
                                      scaleFactor = 1.1,
                                      minNeighbors = 3,
-                                     minSize = (20, 20))
+                                     minSize = (24, 24))
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-    dirname = os.path.dirname(filename)
-    if dirname.endswith("\\") is False:
-        dirname += "\\"
-    name, ext = os.path.splitext(os.path.basename(filename))
-    renamedfilename = dirname + name + "_detect" + ext
-    cv2.imwrite(renamedfilename, image)
-    return (len(faces) > 0)
+    facelen = len(faces)
+    if facelen > 0:
+        dirname = os.path.dirname(filename)
+        if dirname.endswith("\\") is False:
+            dirname += "\\"
+        name, ext = os.path.splitext(os.path.basename(filename))
+        renamedfilename = dirname + name + "_detect" + ext
+        cv2.imwrite(renamedfilename, image)
+    return (facelen > 0)
 
 #捨てると必要なものをステそうなのでリネームで対応したい（希望
 #pre + filename(extぬき) + suf + ext＝変更後のファイル名です
